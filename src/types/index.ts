@@ -1,14 +1,14 @@
-// формируем тип данных из АПИ
-export interface ICardProduct {
+// Типизация данных
+export interface ICard {
     id: string;
     description: string;
     image: string;
     title: string;
     category: string;
-    price: string;
+    price: number | null;
 }
 
-export interface ICustomerData {
+export interface ICustomer {
     payment: string;
     email: string;
     phone: string;
@@ -17,53 +17,34 @@ export interface ICustomerData {
     items: string[];
 }
 
-//формиируем интерфейс для АПИ клиента
-export interface OrderResult {
-    status: string;
-    message: string;
+export interface ICards {
+    cards: ICard[];
+    preview: string | null;
+    getCard(cardId:string):ICard;
 }
 
-//формируем тип данных для модели данных
-export interface IListOfCards {
-    products: ICardProduct[];
-    selectedProduct: ICardProduct;
-    getProducts: () => Promise<ICardProduct[]>;
+export interface IBusket {
+    chosencards: ICard[];
+    addCard(card:ICard): void;
+    deleteCard(cardId:string, payload: Function | null):void;
+    clearBusket():void;
 }
 
-export interface IShoppingList {
-    chosenProducts: ICardProduct[];
-    addProduct: (selectedProduct: ICardProduct) => void;
-    deleteProduct: (selectedProduct: ICardProduct) => void;
-    orderProducts: () => Promise<ICustomerData[]>;
-    ClearAll: () => void;
+export interface ICustomerInfo {
+    payment: TCustomerInfoPayment;
+    contacts: TCustomerInfoContacts;
+    checkValidation(data: Record<keyof TCustomerInfoPayment,  string> | Record<keyof TCustomerInfoContacts, string>):boolean;
+    setPaymentInfo(paymentData: TCustomerInfoPayment): void;
+    setContactInfo(contactData: TCustomerInfoContacts): void;
+    clearData():void;
 }
 
-export interface ICustomerData {
-    orderResutl: (order: ICustomerData) => Promise<OrderResult[]>;
-}
+export type TCardInfo = Pick<ICard, 'title' | 'image' | 'category' | 'price'>;
+export type TCardInfoFull = Pick<ICard, 'title' | 'image' | 'category' | 'price' | 'description'>;
+export type TCardInfoShort = Pick<ICard, 'title' | 'price'>;
+export type TCustomerInfoPayment = Pick<ICustomer, 'payment' | 'address'>;
+export type TCustomerInfoContacts = Pick<ICustomer, 'email' | 'phone'>;
 
-// формируем тип данных для отображения
-export interface Card {
-    description: string;
-    image: string;
-    title: string;
-    category: string;
-    price: string;
-    cardText: string;
-    cardImage: string;
-    cardTitle: string;
-    cardCategory: string;
-    cardPrice: string;
-    compactClass: string;
-}
 
-export interface Form {
-    payment: string;
-    email: string;
-    phone: string;
-    address: string;
-    formPayment: string;
-    formEmail: string;
-    formPhone: string;
-    formAaddress: string;
-}
+
+
