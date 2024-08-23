@@ -23,11 +23,11 @@ export interface ICards {
     getCard(cardId:string):ICard;
 }
 
-export interface IBusket {
+export interface IBasket {
     chosencards: ICard[];
     addCard(card:ICard): void;
     deleteCard(cardId:string, payload: Function | null):void;
-    clearBusket():void;
+    clearBasket():void;
 }
 
 export interface ICustomerInfo {
