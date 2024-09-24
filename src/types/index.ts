@@ -6,6 +6,27 @@ export interface ICard {
     title: string;
     category: string;
     price: number | null;
+    index?: number;
+}
+
+export interface IBasketView {
+    items: HTMLElement[];
+    total: number;
+    selected: ICard[];
+}
+
+export interface IBasket {
+    chosencards: ICard[];
+    cardIds: string[];
+    addCard(card:ICard): void;
+    deleteCard(cardId:string, payload: Function | null):void;
+    clearBasket():void;
+}
+
+export interface ICards {
+    cards: ICard[];
+    preview: string | null;
+    getCard(cardId:string):ICard | undefined;
 }
 
 export interface ICustomer {
@@ -17,33 +38,19 @@ export interface ICustomer {
     items: string[];
 }
 
-export interface ICards {
-    cards: ICard[];
-    preview: string | null;
-    getCard(cardId:string):ICard;
+export interface IOrderResult {
+    id: string;
 }
 
-export interface IBasket {
-    chosencards: ICard[];
-    addCard(card:ICard): void;
-    deleteCard(cardId:string, payload: Function | null):void;
-    clearBasket():void;
-}
-
-export interface ICustomerInfo {
-    payment: TCustomerInfoPayment;
-    contacts: TCustomerInfoContacts;
-    checkValidation(data: Record<keyof TCustomerInfoPayment,  string> | Record<keyof TCustomerInfoContacts, string>):boolean;
-    setPaymentInfo(paymentData: TCustomerInfoPayment): void;
-    setContactInfo(contactData: TCustomerInfoContacts): void;
-    clearData():void;
-}
-
-export type TCardInfo = Pick<ICard, 'title' | 'image' | 'category' | 'price'>;
-export type TCardInfoFull = Pick<ICard, 'title' | 'image' | 'category' | 'price' | 'description'>;
-export type TCardInfoShort = Pick<ICard, 'title' | 'price'>;
-export type TCustomerInfoPayment = Pick<ICustomer, 'payment' | 'address'>;
 export type TCustomerInfoContacts = Pick<ICustomer, 'email' | 'phone'>;
+export type TCustomerInfoPayment = Pick<ICustomer, 'payment' | 'address'>;
+
+
+
+
+
+
+
 
 
 
